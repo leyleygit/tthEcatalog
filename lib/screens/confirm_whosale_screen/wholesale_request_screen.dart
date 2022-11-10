@@ -1,3 +1,4 @@
+import 'package:ecatalog/data/status_data.dart';
 import 'package:ecatalog/screens/confirm_whosale_screen/approved.dart';
 import 'package:ecatalog/screens/confirm_whosale_screen/decline.dart';
 import 'package:ecatalog/screens/confirm_whosale_screen/request.dart';
@@ -5,15 +6,30 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:rxdart/subjects.dart';
 
-class ConfirmWhosaleScreen extends StatefulWidget {
-  const ConfirmWhosaleScreen({super.key});
+class WholesaleRequestScreen extends StatefulWidget {
+  const WholesaleRequestScreen({super.key});
 
   @override
-  State<ConfirmWhosaleScreen> createState() => _ConfirmWhosaleScreenState();
+  State<WholesaleRequestScreen> createState() => _WholesaleRequestScreenState();
 }
 
-class _ConfirmWhosaleScreenState extends State<ConfirmWhosaleScreen> {
+class _WholesaleRequestScreenState extends State<WholesaleRequestScreen> {
+  BehaviorSubject<List<String>> subjectListStatus =
+      BehaviorSubject<List<String>>();
+  @override
+  void initState() {
+    super.initState();
+    subjectListStatus.add(status);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    subjectListStatus.close();
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -26,7 +42,7 @@ class _ConfirmWhosaleScreenState extends State<ConfirmWhosaleScreen> {
               title: Row(
                 children: [
                   Text(
-                    'Whosale request',
+                    'Wholesale request',
                     style: TextStyle(color: Colors.black, fontSize: 25),
                   ),
                 ],
